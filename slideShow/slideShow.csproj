@@ -95,5 +95,8 @@
   <ItemGroup>
     <None Include="Resources\iconfinder_folder-add_216217.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\iconfinder_plus_216373.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

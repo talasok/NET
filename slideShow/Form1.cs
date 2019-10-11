@@ -75,17 +75,23 @@ namespace slideShow
 
         private void btnFile_Click(object sender, EventArgs e)
         {
-            
-            
+            var len=0;
+            if (list!=null)
+                len = list.Length;
             DialogResult dr = folderBrowserDialog1.ShowDialog();
-            if(dr!= null && list != null)
-            {
-                list = null;
-            }
+            //if(dr!= null && list != null)
+            //{
+            //    list = null;
+            //}
             if (dr != DialogResult.Cancel)
             {
                 Dirpath = folderBrowserDialog1.SelectedPath;
                 list = Directory.GetFiles(Dirpath, "*.jpg");
+                if (len<list.Length)
+                {
+                    list = null;
+                    list = Directory.GetFiles(Dirpath, "*.jpg");
+                }
             }
             btnPrev.Enabled = true;
             btnNext.Enabled = btnRun.Enabled = true;
@@ -101,17 +107,40 @@ namespace slideShow
         }
         private void load_open()
         {
-            showImg.ImageLocation = list[imgindex].ToString();
+            if(list!=null && list.Length > 0)
+            {
+                showImg.ImageLocation = list[imgindex].ToString();
+            }
+            else
+            {
+                showImg.ImageLocation = null;
+                showImg.Refresh();
+                btnPrev.Enabled = false;
+                btnNext.Enabled = false;
+                btnRun.Enabled = false;
+                MessageBox.Show("thư mục k chứa ảnh");
+            }
         }
         private void Load_layout()
         {
-            foreach(string ds in list)
+            if (showImgLayout != null)
+            {
+                showImgLayout.Controls.Clear();
+            }
+            foreach (string ds in list)
             {
                 layoutImg = new PictureBox();
                 layoutImg.SizeMode = PictureBoxSizeMode.StretchImage;
                 layoutImg.ImageLocation = ds.ToString();
                 showImgLayout.Controls.Add(layoutImg);
             }
+        }
+
+        private void Slide_Load(object sender, EventArgs e)
+        {
+            btnPrev.Enabled = false;
+            btnNext.Enabled = false;
+            btnRun.Enabled = false;
         }
     }
 }

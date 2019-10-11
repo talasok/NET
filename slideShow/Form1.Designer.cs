@@ -123,6 +123,7 @@
             this.MaximizeBox = false;
             this.Name = "Slide";
             this.Text = "Slide";
+            this.Load += new System.EventHandler(this.Slide_Load);
             ((System.ComponentModel.ISupportInitialize)(this.showImg)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
