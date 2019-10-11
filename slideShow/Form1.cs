@@ -75,8 +75,13 @@ namespace slideShow
 
         private void btnFile_Click(object sender, EventArgs e)
         {
-            list = null;
+            
+            
             DialogResult dr = folderBrowserDialog1.ShowDialog();
+            if(dr!= null && list != null)
+            {
+                list = null;
+            }
             if (dr != DialogResult.Cancel)
             {
                 Dirpath = folderBrowserDialog1.SelectedPath;
@@ -84,7 +89,7 @@ namespace slideShow
             }
             btnPrev.Enabled = true;
             btnNext.Enabled = btnRun.Enabled = true;
-            if(list.Length > 0)
+            if(list!=null)
             {
                 load_open();
                 Load_layout();
