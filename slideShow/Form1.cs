@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace slideShow
@@ -15,7 +9,8 @@ namespace slideShow
     {
         string Dirpath;
         int imgindex=0;
-        String[] list;
+        String[] list= new string[100];
+        int index=0;
         Boolean check = false;
         PictureBox layoutImg;
         public Slide()
@@ -25,11 +20,11 @@ namespace slideShow
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-            if (imgindex < list.Length - 1)
+            if (imgindex < list.Length - 1 || imgindex < index-1)
             {
                 imgindex += 1;
                 showImg.ImageLocation = list[imgindex].ToString();
-                if (imgindex == list.Length - 1)
+                if (imgindex == list.Length - 1 || imgindex == index-1)
                 {
                     btnNext.Enabled = false;
                     check = false;
@@ -51,7 +46,7 @@ namespace slideShow
                 {
                     btnPrev.Enabled = false;
                 }
-                if (imgindex < list.Length - 1)
+                if (imgindex < list.Length - 1 ||imgindex < index-1)
                     btnNext.Enabled = true;
             }
         }
@@ -75,30 +70,19 @@ namespace slideShow
 
         private void btnFile_Click(object sender, EventArgs e)
         {
-            var len=0;
-            if (list!=null)
-                len = list.Length;
-            DialogResult dr = folderBrowserDialog1.ShowDialog();
-            //if(dr!= null && list != null)
-            //{
-            //    list = null;
-            //}
+            DialogResult dr = folderBrowserDialog1.ShowDialog();   
             if (dr != DialogResult.Cancel)
             {
                 Dirpath = folderBrowserDialog1.SelectedPath;
                 list = Directory.GetFiles(Dirpath, "*.jpg");
-                if (len<list.Length)
-                {
-                    list = null;
-                    list = Directory.GetFiles(Dirpath, "*.jpg");
-                }
             }
-            btnPrev.Enabled = true;
-            btnNext.Enabled = btnRun.Enabled = true;
             if(list!=null)
             {
                 load_open();
                 Load_layout();
+                btnPrev.Enabled = false;
+                btnNext.Enabled = btnRun.Enabled = true;
+                btnAdd.Enabled = false;
             }
         }
         private void timer1_Tick(object sender, EventArgs e)
@@ -115,9 +99,6 @@ namespace slideShow
             {
                 showImg.ImageLocation = null;
                 showImg.Refresh();
-                btnPrev.Enabled = false;
-                btnNext.Enabled = false;
-                btnRun.Enabled = false;
                 MessageBox.Show("thư mục k chứa ảnh");
             }
         }
@@ -131,7 +112,7 @@ namespace slideShow
             {
                 layoutImg = new PictureBox();
                 layoutImg.SizeMode = PictureBoxSizeMode.StretchImage;
-                layoutImg.ImageLocation = ds.ToString();
+                layoutImg.ImageLocation = ds;
                 showImgLayout.Controls.Add(layoutImg);
             }
         }
@@ -141,6 +122,26 @@ namespace slideShow
             btnPrev.Enabled = false;
             btnNext.Enabled = false;
             btnRun.Enabled = false;
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.Filter = "file anh (*.jpg, *.png)|*.png;*.jpg";
+            fileDialog.Title = "chọn ảnh ";
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                var fileName = fileDialog.FileName;
+                list[index] = fileName;
+                index++;
+                Load_layout();
+                load_open();
+            }
+            if (index != 0)
+            {
+                btnFile.Enabled = false;
+                btnRun.Enabled = btnNext.Enabled = true;
+            }
         }
     }
 }

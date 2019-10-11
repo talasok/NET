@@ -38,6 +38,7 @@
             this.btnNext = new System.Windows.Forms.Button();
             this.btnPrev = new System.Windows.Forms.Button();
             this.showImg = new System.Windows.Forms.PictureBox();
+            this.btnAdd = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.showImg)).BeginInit();
             this.SuspendLayout();
             // 
@@ -107,11 +108,22 @@
             this.showImg.TabIndex = 0;
             this.showImg.TabStop = false;
             // 
+            // btnAdd
+            // 
+            this.btnAdd.Image = global::slideShow.Properties.Resources.iconfinder_plus_216373;
+            this.btnAdd.Location = new System.Drawing.Point(451, 477);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(30, 30);
+            this.btnAdd.TabIndex = 6;
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
             // Slide
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(647, 511);
+            this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.showImgLayout);
             this.Controls.Add(this.btnFile);
             this.Controls.Add(this.btnRun);
@@ -140,6 +152,7 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.FlowLayoutPanel showImgLayout;
+        private System.Windows.Forms.Button btnAdd;
     }
 }
 
